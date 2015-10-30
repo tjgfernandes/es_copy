@@ -1,8 +1,12 @@
-= es_copy
+es_copy
+=======
 
-Description goes here.
+Bulk ES index copy utility
 
-== Contributing to es_copy
+[![Build Status](https://travis-ci.org/johnjansen/es_copy.svg)](https://travis-ci.org/johnjansen/es_copy)
+
+Contributing to es_copy
+=======================
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
