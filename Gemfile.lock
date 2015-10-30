@@ -103,6 +103,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   awesome_print
   bundler (~> 1.0)
   codeclimate-test-reporter
