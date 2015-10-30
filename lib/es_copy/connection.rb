@@ -63,7 +63,8 @@ module ESCopy
           buffer
         end
         bulk_result = destination.connection.bulk body: items
-        ap bulk_result
+        errors = bulk_result.reject{ |i| i['index']['status'].to_s =~ /^20[0-9]/ }
+        ap(errors) unless errors.empty?
       end
     end
   end
