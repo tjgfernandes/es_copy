@@ -14,11 +14,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
-  gem.name = 'es_copy'
+  gem.name = 'Elasticsearch Index Copy'
   gem.homepage = 'http://github.com/johnjansen/es_copy'
   gem.license = 'MIT'
-  gem.summary = %(TODO: one-line summary of your gem)
-  gem.description = %(TODO: longer description of your gem)
+  gem.summary = 'Copy an Elasticsearch index ... Somewhere'
+  gem.description = 'Copy an Elasticsearch index ... Somewhere'
   gem.email = 'john.jansen@me.com'
   gem.authors = ['John Jansen']
   # dependencies defined in Gemfile
