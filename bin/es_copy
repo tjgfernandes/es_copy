@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'es_copy'
+require 'optparse'
+require 'ap'
+require 'json'
+
+options = {}
+
+option_parser = OptionParser.new do |opts|
+  executable_name = File.basename($PROGRAM_NAME)
+  opts.banner = "
+    Copy an Elasticsearch index ... Somewhere
+
+    Usage: #{executable_name} [options]
+  "
+
+  opts.on('-s', '--source [SOURCE]', 'The full path to the source index') do |source|
+    options[:source] = source
+  end
+
+  opts.on('-d', '--destination [DESTINATION]', 'The full path to the destination index') do |destination|
+    options[:destination] = destination
+  end
+
+  opts.on('-c', '--copy-settings', 'Copy the settings from the source index') do |copy_settings|
+    options[:copy_settings] = copy_settings
+  end
+
+  opts.on('-s', '--bulk-size [BULK_SIZE]', Integer, 'The size of the batches to pull') do |bulk_size|
+    options[:bulk_size] = bulk_size
+  end
+
+  opts.on('-x', '--merge-settings [SETTINGS_PATH]', 'New settings which will either merge into the source settings or replace it if -c is not specified') do |settings_path|
+    options[:new_settings] = JSON.parse(File.open(settings_path, 'r').read)
+  end
+
+  # Boolean switch.
+  opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
+    options[:verbose] = v
+  end
+
+  opts.separator ''
+  opts.separator 'Common options:'
+
+  # No argument, shows at tail.  This will print an options summary.
+  # Try it and see!
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+
+  # Another typical switch to print the version.
+  opts.on_tail('--version', 'Show version') do
+    puts ::Version.join('.')
+    exit
+  end
+end
+
+begin
+  option_parser.parse!
+rescue OptionParser::InvalidOption => error
+  puts "es_copy doesn't recognize that #{error}"
+  exit
+rescue OptionParser::AmbiguousOption => error
+  puts "That's an #{error}"
+  exit
+end
+
+exit ESCopy::Engine.run!(options)
