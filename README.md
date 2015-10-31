@@ -3,9 +3,10 @@ es_copy
 
 Bulk ES index copy utility
 
-[![Build Status](https://travis-ci.org/johnjansen/es_copy.svg)](https://travis-ci.org/johnjansen/es_copy)
-[![Code Climate](https://codeclimate.com/github/johnjansen/es_copy/badges/gpa.svg)](https://codeclimate.com/github/johnjansen/es_copy)
-[![Test Coverage](https://codeclimate.com/github/johnjansen/es_copy/badges/coverage.svg)](https://codeclimate.com/github/johnjansen/es_copy/coverage)
+  - [![Build Status](https://travis-ci.org/johnjansen/es_copy.svg)](https://travis-ci.org/johnjansen/es_copy)
+  - [![Code Climate](https://codeclimate.com/github/johnjansen/es_copy/badges/gpa.svg)](https://codeclimate.com/github/johnjansen/es_copy)
+  - [![Test Coverage](https://codeclimate.com/github/johnjansen/es_copy/badges/coverage.svg)](https://codeclimate.com/github/johnjansen/es_copy/coverage)
+  - [![Dependency Status](https://gemnasium.com/johnjansen/es_copy.svg)](https://gemnasium.com/johnjansen/es_copy)
 
 Contributing to es_copy
 =======================
