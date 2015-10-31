@@ -64,8 +64,8 @@ describe 'ESCopy::Connection' do
       path = 'http://fqdn.domain:1000/index_name/data_type'
       connection = ESCopy::Connection.new(path)
       settings = {
-        "number_of_shards":"7",
-        "number_of_replicas":"7"
+        "number_of_shards" => "7",
+        "number_of_replicas" => "7"
       }
       VCR.use_cassette('create_index') do
         expect(connection.apply_settings(settings)).to eq({"acknowledged"=>true})
