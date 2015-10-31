@@ -70,8 +70,8 @@ describe 'ESCopy::Connection' do
       VCR.use_cassette('create_index') do
         expect(connection.apply_settings(settings)).to eq({"acknowledged"=>true})
         index_settings = connection.settings
-        expect(index_settings['number_of_shards']).to eq(settings['number_of_shards'])
-        expect(index_settings['number_of_replicas']).to eq(settings['number_of_replicas'])
+        expect(index_settings['index_name']['settings']['index']['number_of_shards']).to eq(settings['number_of_shards'])
+        expect(index_settings['index_name']['settings']['index']['number_of_replicas']).to eq(settings['number_of_replicas'])
       end
     end
   end
