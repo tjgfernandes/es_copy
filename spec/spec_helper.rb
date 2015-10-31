@@ -32,10 +32,10 @@ end
 
 require 'vcr'
 VCR.configure do |config|
-  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.cassette_library_dir = 'fixtures/vcr_cassettes'
   config.hook_into :webmock # or :fakeweb
   # your existing configuration
   config.ignore_hosts 'codeclimate.com'
 end
 
-WebMock.disable_net_connect!(:allow => "codeclimate.com")
+WebMock.disable_net_connect!(allow: 'codeclimate.com')

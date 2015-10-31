@@ -22,7 +22,7 @@ module ESCopy
       # fire off the copy
       source.copy_to(destination, with: settings.transformed, bulk_size: options[:bulk_size])
 
-      return 0
+      0
     end
   end
 end

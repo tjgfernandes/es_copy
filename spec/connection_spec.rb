@@ -3,7 +3,7 @@ require 'awesome_print'
 
 describe 'ESCopy::Connection' do
   it 'should initialize as expected' do
-    path = "http://fqdn.domain:1000/index_name/data_type"
+    path = 'http://fqdn.domain:1000/index_name/data_type'
     connection = ESCopy::Connection.new(path)
 
     expect(connection.instance_variable_get('@index')).to eq('index_name')
@@ -13,7 +13,7 @@ describe 'ESCopy::Connection' do
 
     connection = connection.instance_variable_get('@connection')
     expect(connection.class).to be(Elasticsearch::Transport::Client)
-    
+
     host = connection.instance_variable_get('@transport').instance_variable_get('@options')[:host]
     expect(host).to eq('http://fqdn.domain:1000')
 
@@ -25,10 +25,10 @@ describe 'ESCopy::Connection' do
   end
 
   it 'should return the settings for the index' do
-    path = "http://fqdn.domain:1000/index_name/data_type"
+    path = 'http://fqdn.domain:1000/index_name/data_type'
     connection = ESCopy::Connection.new(path)
-    expected = JSON.parse(File.open("fixtures/get_settings_expected.json", "r").read)
-    VCR.use_cassette("get_settings") do
+    expected = JSON.parse(File.open('fixtures/get_settings_expected.json', 'r').read)
+    VCR.use_cassette('get_settings') do
       expect(connection.settings).to eq(expected)
     end
   end

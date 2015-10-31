@@ -2,10 +2,9 @@ require 'addressable/uri'
 require 'elasticsearch'
 
 module ESCopy
-  # 
+  #
   class Connection
-
-    # 
+    #
     attr_reader :index, :type, :connection
 
     # construct the object
@@ -23,8 +22,8 @@ module ESCopy
     end
 
     # sets the settings for the index
-    def apply_settings hash
-      raise "Index already exists" if exists?
+    def apply_settings(hash)
+      fail 'Index already exists' if exists?
       settings = {
         body: hash,
         index: @index
@@ -50,14 +49,14 @@ module ESCopy
         type: @type
       }
       search = @connection.search search_args
-      while search = @connection.scroll(scroll_id: search['_scroll_id'], scroll: scroll_time) and not search['hits']['hits'].empty? do
+      while search = @connection.scroll(scroll_id: search['_scroll_id'], scroll: scroll_time) and !search['hits']['hits'].empty?
         items = search['hits']['hits'].inject([]) do |buffer, hit|
           buffer << { index: { _index: destination.index, _type: destination.type, _id: hit['_id'] } }
           buffer << hit['_source']
           buffer
         end
         bulk_result = destination.connection.bulk body: items
-        errors = bulk_result.reject{ |i| i['index']['status'].to_s =~ /^20[0-9]/ }
+        errors = bulk_result.reject { |i| i['index']['status'].to_s =~ /^20[0-9]/ }
         ap(errors) unless errors.empty?
       end
     end
