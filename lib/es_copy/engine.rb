@@ -9,11 +9,11 @@ module ESCopy
       options = DEFAULTS.merge(options)
 
       # create a source
-      source = Connection.new(options[:source], options[:verbose])
+      source = Connection.new(options[:source], verbose: options[:verbose])
       return 1 unless source.exists?
 
       # create a destination
-      destination = Connection.new(options[:destination], options[:verbose])
+      destination = Connection.new(options[:destination], verbose: options[:verbose])
       return 1 if destination.exists?
 
       # create an appropriate mapping

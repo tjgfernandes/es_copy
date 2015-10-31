@@ -1,0 +1,15 @@
+{ 
+  "index_name": {
+    "settings": {
+      "index": {
+        "creation_date": "1446244121777",
+        "number_of_replicas": "1",
+        "number_of_shards": "5",
+        "uuid": "iOcMNTRiQNu8MeRBvRh4Yw",
+        "version": {
+          "created": "1070199"
+        }
+      }
+    }
+  }
+}

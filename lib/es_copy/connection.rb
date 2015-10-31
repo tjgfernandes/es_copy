@@ -9,28 +9,20 @@ module ESCopy
     attr_reader :index, :type, :connection
 
     # construct the object
-    def initialize(source, verbose)
-      uri = Addressable::URI.parse(source)
+    def initialize(uri, verbose: false)
+      uri = Addressable::URI.parse(uri)
       @index, @type = uri.path[1..-1].split('/')[0..1]
       @verbose = verbose
       @host = Addressable::URI.new(scheme: uri.scheme, host: uri.host, port: uri.port)
-      @connection = Elasticsearch::Client.new log: @verbose, host: @host.to_s
+      @connection = Elasticsearch::Client.new(log: @verbose, host: @host.to_s)
     end
 
-    # return a hash for the path components pointing us at the data
-    def data_path
-      @data_path ||= {
-        index: @index,
-        type: @type
-      }
-    end
-
-    # gets the mapping for the index
+    # gets the settings for the index
     def settings
       @connection.indices.get_settings index: @index
     end
 
-    # sets the mapping for the index
+    # sets the settings for the index
     def apply_settings hash
       raise "Index already exists" if exists?
       settings = {
@@ -53,8 +45,10 @@ module ESCopy
       search_args = {
         search_type: 'scan',
         scroll: scroll_time,
-        size: bulk_size
-      }.merge(data_path)
+        size: bulk_size,
+        index: @index,
+        type: @type
+      }
       search = @connection.search search_args
       while search = @connection.scroll(scroll_id: search['_scroll_id'], scroll: scroll_time) and not search['hits']['hits'].empty? do
         items = search['hits']['hits'].inject([]) do |buffer, hit|

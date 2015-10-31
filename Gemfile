@@ -14,6 +14,7 @@ end
 
 group :development, :test do
   gem 'rubocop', '~> 0.34.2', require: nil
+  gem 'webmock', '~> 1.22.2'
   gem 'vcr', '~> 2.9.3'
 end
 
