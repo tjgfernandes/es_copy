@@ -50,4 +50,29 @@ describe 'ESCopy::Connection' do
       end
     end
   end
+
+  describe 'apply_settings' do
+    it 'should fail if index already exists' do
+      path = 'http://fqdn.domain:1000/index_name/data_type'
+      connection = ESCopy::Connection.new(path)
+      VCR.use_cassette('index_exists') do
+        expect{connection.apply_settings}.to raise_error(RuntimeError)
+      end
+    end
+
+    it 'should succeed if the index doesnt exist' do
+      path = 'http://fqdn.domain:1000/index_name/data_type'
+      connection = ESCopy::Connection.new(path)
+      settings = {
+        "number_of_shards":"7",
+        "number_of_replicas":"7"
+      }
+      VCR.use_cassette('create_index') do
+        expect(connection.apply_settings(settings)).to eq({"acknowledged"=>true})
+        index_settings = connection.settings
+        expect(index_settings['number_of_shards']).to eq(settings['number_of_shards'])
+        expect(index_settings['number_of_replicas']).to eq(settings['number_of_replicas'])
+      end
+    end
+  end
 end

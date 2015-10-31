@@ -22,7 +22,7 @@ module ESCopy
     end
 
     # sets the settings for the index
-    def apply_settings(hash)
+    def apply_settings(hash={})
       fail 'Index already exists' if exists?
       settings = {
         body: hash,
