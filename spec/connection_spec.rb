@@ -32,4 +32,22 @@ describe 'ESCopy::Connection' do
       expect(connection.settings).to eq(expected)
     end
   end
+
+  describe 'exists?' do
+    it 'should be true' do
+      path = 'http://fqdn.domain:1000/index_name/data_type'
+      connection = ESCopy::Connection.new(path)
+      VCR.use_cassette('index_exists') do
+        expect(connection.exists?).to eq(true)
+      end
+    end
+
+    it 'should be false' do
+      path = 'http://fqdn.domain:1000/index_name/data_type'
+      connection = ESCopy::Connection.new(path)
+      VCR.use_cassette('index_missing') do
+        expect(connection.exists?).to eq(false)
+      end
+    end
+  end
 end
