@@ -55,7 +55,7 @@ module ESCopy
 
       scroll_time = '5m'
       search = @connection.search search_args(scroll_time, bulk_size, query)
-
+      ap search
       while search = @connection.scroll(scroll_id: search['_scroll_id'], scroll: scroll_time) and !search['hits']['hits'].empty?
         items = search['hits']['hits'].inject([]) do |buffer, hit|
           buffer << { index: { _index: destination.index, _type: destination.type, _id: hit['_id'] } }
