@@ -1,0 +1,202 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: http://localhost:9200/my_index2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - text/plain; charset=UTF-8
+      Content-Length:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+- request:
+    method: put
+    uri: http://localhost:9200/my_index2
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '21'
+    body:
+      encoding: UTF-8
+      string: '{"acknowledged":true}'
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/my_index/my_type/_search?scroll=5m&search_type=scan&size=100
+    body:
+      encoding: UTF-8
+      string: '{"query":{"match_all":{}}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '342'
+    body:
+      encoding: UTF-8
+      string: '{"_scroll_id":"c2Nhbjs1OzcwOkRibjAxME5VUm1HUFFJcEJIWEY1c0E7NzE6RGJuMDEwTlVSbUdQUUlwQkhYRjVzQTs3MjpEYm4wMTBOVVJtR1BRSXBCSFhGNXNBOzczOkRibjAxME5VUm1HUFFJcEJIWEY1c0E7NzQ6RGJuMDEwTlVSbUdQUUlwQkhYRjVzQTsxO3RvdGFsX2hpdHM6Njs=","took":28,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":6,"max_score":0.0,"hits":[]}}'
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/_search/scroll?scroll=5m
+    body:
+      encoding: UTF-8
+      string: c2Nhbjs1OzcwOkRibjAxME5VUm1HUFFJcEJIWEY1c0E7NzE6RGJuMDEwTlVSbUdQUUlwQkhYRjVzQTs3MjpEYm4wMTBOVVJtR1BRSXBCSFhGNXNBOzczOkRibjAxME5VUm1HUFFJcEJIWEY1c0E7NzQ6RGJuMDEwTlVSbUdQUUlwQkhYRjVzQTsxO3RvdGFsX2hpdHM6Njs=
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '927'
+    body:
+      encoding: UTF-8
+      string: |-
+        {"_scroll_id":"c2NhbjswOzE7dG90YWxfaGl0czo2Ow==","took":1,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},"hits":{"total":6,"max_score":0.0,"hits":[{"_index":"my_index","_type":"my_type","_id":"4","_score":0.0,"_source":
+        {
+          "name": "Apple TV"
+        }},{"_index":"my_index","_type":"my_type","_id":"_search","_score":0.0,"_source":
+            {
+              "query": {
+                "match": {
+                  "name.phonetic": {
+                    "query": "Jahnnie Smeeth",
+                    "operator": "and"
+                  }
+                }
+              }
+            }
+        },{"_index":"my_index","_type":"my_type","_id":"5","_score":0.0,"_source":
+        {
+          "name": "Apple Watch"
+        }},{"_index":"my_index","_type":"my_type","_id":"1","_score":0.0,"_source":
+        {
+          "name": "John Smith"
+        }},{"_index":"my_index","_type":"my_type","_id":"2","_score":0.0,"_source":
+        {
+          "name": "Jonnie Smythe"
+        }},{"_index":"my_index","_type":"my_type","_id":"3","_score":0.0,"_source":
+        {
+          "name": "Apple"
+        }}]}}
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+- request:
+    method: post
+    uri: http://localhost:9200/_bulk
+    body:
+      encoding: UTF-8
+      string: |
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"4"}}
+        {"name":"Apple TV"}
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"_search"}}
+        {"query":{"match":{"name.phonetic":{"query":"Jahnnie Smeeth","operator":"and"}}}}
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"5"}}
+        {"name":"Apple Watch"}
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"1"}}
+        {"name":"John Smith"}
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"2"}}
+        {"name":"Jonnie Smythe"}
+        {"index":{"_index":"my_index2","_type":"my_type","_id":"3"}}
+        {"name":"Apple"}
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '563'
+    body:
+      encoding: UTF-8
+      string: '{"took":5,"errors":false,"items":[{"index":{"_index":"my_index2","_type":"my_type","_id":"4","_version":1,"status":201}},{"index":{"_index":"my_index2","_type":"my_type","_id":"_search","_version":1,"status":201}},{"index":{"_index":"my_index2","_type":"my_type","_id":"5","_version":1,"status":201}},{"index":{"_index":"my_index2","_type":"my_type","_id":"1","_version":1,"status":201}},{"index":{"_index":"my_index2","_type":"my_type","_id":"2","_version":1,"status":201}},{"index":{"_index":"my_index2","_type":"my_type","_id":"3","_version":1,"status":201}}]}'
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+- request:
+    method: get
+    uri: http://localhost:9200/_search/scroll?scroll=5m
+    body:
+      encoding: UTF-8
+      string: c2NhbjswOzE7dG90YWxfaGl0czo2Ow==
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '169'
+    body:
+      encoding: UTF-8
+      string: '{"_scroll_id":"c2NhbjswOzE7dG90YWxfaGl0czo2Ow==","took":0,"timed_out":false,"_shards":{"total":0,"successful":0,"failed":0},"hits":{"total":6,"max_score":0.0,"hits":[]}}'
+    http_version: 
+  recorded_at: Mon, 02 Nov 2015 04:29:33 GMT
+recorded_with: VCR 2.9.3

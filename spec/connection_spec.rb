@@ -75,4 +75,33 @@ describe 'ESCopy::Connection' do
       end
     end
   end
+
+  describe 'search_args' do
+    it 'should build search args as expected' do
+      path = 'http://fqdn.domain:1000/index_name/data_type'
+      connection = ESCopy::Connection.new(path)
+      args = connection.search_args('999m', 999, {hello: :world})
+      expect(args[:search_type]).to eq('scan')
+      expect(args[:scroll]).to eq('999m')
+      expect(args[:size]).to eq(999)
+      expect(args[:index]).to eq('index_name')
+      expect(args[:type]).to eq('data_type')
+      expect(args[:body]).to eq({query: {hello: :world}})
+    end
+  end
+
+  describe 'copy_to' do
+    it 'should call out to create an index' do
+      # pending 'implement tests'
+      # fail
+
+      path2 = 'http://localhost:9200/my_index2/my_type'
+      destination = ESCopy::Connection.new(path2)
+      path = 'http://localhost:9200/my_index/my_type'
+      source = ESCopy::Connection.new(path)
+      VCR.use_cassette('kitchen_sink') do
+        source.copy_to(destination, query: {'match_all' => {}})
+      end
+    end
+  end
 end

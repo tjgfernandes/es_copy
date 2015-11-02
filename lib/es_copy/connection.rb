@@ -1,5 +1,6 @@
 require 'addressable/uri'
 require 'elasticsearch'
+require 'awesome_print'
 
 module ESCopy
   #
@@ -36,28 +37,34 @@ module ESCopy
       @connection.indices.exists? index: @index
     end
 
-    # copy from me to them
-    def copy_to(destination, bulk_size: 100, with: {})
-      destination.apply_settings(with)
-
-      scroll_time = '5m'
-      search_args = {
+    # return the search args for the copy
+    def search_args(scroll_time, bulk_size, query)
+      {
         search_type: 'scan',
         scroll: scroll_time,
         size: bulk_size,
         index: @index,
-        type: @type
+        type: @type,
+        body: {query: query}
       }
-      search = @connection.search search_args
+    end
+
+    # copy from me to them
+    def copy_to(destination, query: {}, bulk_size: 100, with: {})
+      destination.apply_settings(with)
+
+      scroll_time = '5m'
+      search = @connection.search search_args(scroll_time, bulk_size, query)
+
       while search = @connection.scroll(scroll_id: search['_scroll_id'], scroll: scroll_time) and !search['hits']['hits'].empty?
         items = search['hits']['hits'].inject([]) do |buffer, hit|
           buffer << { index: { _index: destination.index, _type: destination.type, _id: hit['_id'] } }
           buffer << hit['_source']
           buffer
         end
-        bulk_result = destination.connection.bulk body: items
-        errors = bulk_result.reject { |i| i['index']['status'].to_s =~ /^20[0-9]/ }
-        ap(errors) unless errors.empty?
+        result = destination.connection.bulk(body: items)
+        # TODO implement error handling (retry)
+        # if result["errors"]
       end
     end
   end

@@ -2,7 +2,11 @@ module ESCopy
   #
   class Engine
     #
-    DEFAULTS = {}
+    DEFAULTS = {
+      :query => {
+        'match_all' => { }
+      }
+    }
 
     #
     def self.run!(options)
@@ -20,7 +24,7 @@ module ESCopy
       settings = Settings.new(source.settings, options[:new_settings])
 
       # fire off the copy
-      source.copy_to(destination, with: settings.transformed, bulk_size: options[:bulk_size])
+      source.copy_to(destination, with: settings.transformed, query: options[:query], bulk_size: options[:bulk_size])
 
       0
     end
