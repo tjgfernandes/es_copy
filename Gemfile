@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'elasticsearch', '~> 1.0.14'
-gem 'addressable', '~> 2.3.8'
+gem 'addressable', '~> 2.8.1'
 
 group :development do
   gem 'rspec', '~> 3.3.0'

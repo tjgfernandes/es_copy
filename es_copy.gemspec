@@ -61,7 +61,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<elasticsearch>, ["~> 1.0.14"])
-      s.add_runtime_dependency(%q<addressable>, ["~> 2.3.8"])
+      s.add_runtime_dependency(%q<addressable>, ["~> 2.8.1"])
       s.add_development_dependency(%q<rspec>, ["~> 3.3.0"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
@@ -73,7 +73,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<vcr>, ["~> 2.9.3"])
     else
       s.add_dependency(%q<elasticsearch>, ["~> 1.0.14"])
-      s.add_dependency(%q<addressable>, ["~> 2.3.8"])
+      s.add_dependency(%q<addressable>, ["~> 2.8.1"])
       s.add_dependency(%q<rspec>, ["~> 3.3.0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<cucumber>, [">= 0"])
@@ -86,7 +86,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<elasticsearch>, ["~> 1.0.14"])
-    s.add_dependency(%q<addressable>, ["~> 2.3.8"])
+    s.add_dependency(%q<addressable>, ["~> 2.8.1"])
     s.add_dependency(%q<rspec>, ["~> 3.3.0"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<cucumber>, [">= 0"])
